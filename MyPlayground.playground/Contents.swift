@@ -23,15 +23,17 @@ final class User {
         listOwner.list.append(film)
     }
     
-//    ни как не могу решить как вернуть List. У меня получается возврат String
+//    ни как не могу решить как вернуть List?
+//    list(forName:) -> List?, который возвращает список для заданного имени.
     func list(forName name: String) {
-
+        var tmp = List(owner: User(name: name))
+        tmp.list
     }
 }
 
 final class List {
-    var owner: User?
-    var list: [String] = []
+    private var owner: User?
+    fileprivate var list: [String] = []
     
     init(owner: User? = nil) {
         self.owner = owner
@@ -47,7 +49,6 @@ janeList.list
 // добавляем фильм в плейлист
 jane.addList(janeList, "Terminator")
 jane.addList(janeList, "Murzilka")
-janeList.list
 
 jane.list(forName: "Jane")
 
