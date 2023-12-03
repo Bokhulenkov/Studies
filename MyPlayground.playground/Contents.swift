@@ -9,48 +9,48 @@ import UIKit
  - User: содержит метод addList(_:), который добавляет заданный список в словарь объектов List (используя имя в качестве ключа), и list(forName:) -> List?, который возвращает список для заданного имени.
  - List: Содержит имя и массив названий фильмов. Метод print выводит все фильмы в списке.
  - Создайте пользователей jane и john и попросите их создавать и обмениваться списками. Пусть jane и john изменят один и тот же список и вызовут print у обоих пользователей. Все ли изменения отражены?
- - Что произойдет, если вы реализуете то же самое со структурами? С какими проблемами вы столкнетесь?
 */
 
     
-class User {
-    var name: String
+final class User {
+    private var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
     
     func addList(_ listOwner: List, _ film: String){
         listOwner.list.append(film)
     }
     
-    func list(forName: List) -> List? {
-        return forName
-    }
-    
-    init(name: String) {
-        self.name = name
+//    ни как не могу решить как вернуть List?
+//    list(forName:) -> List?, который возвращает список для заданного имени.
+    func list(forName name: String) {
+        var tmp = List(owner: User(name: name))
+        tmp.list
     }
 }
 
-class List {
-    var owner: User?
-    var list: [String] = [] {
-        didSet { print(list) }
-    }
+final class List {
+    private var owner: User?
+    fileprivate var list: [String] = []
+    
     init(owner: User? = nil) {
         self.owner = owner
     }
 }
 
 
-let jack = User(name: "Jack")
-let jackList = List(owner: jack)
-jack.addList(jackList, "Terminator")
-jack.addList(jackList, "Uno")
+// у меня есть пользователь Jane
+let jane = User(name: "Jane")
+// у Jane есть список фильмов
+let janeList = List(owner: jane)
+janeList.list
+// добавляем фильм в плейлист
+jane.addList(janeList, "Terminator")
+jane.addList(janeList, "Murzilka")
 
-jack.list(forName: jackList)
+jane.list(forName: "Jane")
 
-let poll = User(name: "Poll")
-let pollList = List(owner: poll)
-poll.addList(jackList, "Poll came back")
-poll.addList(pollList, "Stats")
 
-pollList.list
-jackList.list
+let johnList = List(owner: User(name: "John"))
